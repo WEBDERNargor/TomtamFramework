@@ -1,0 +1,8 @@
+{
+    "require": {
+        "bramus/router": "^1.6",
+        "jenssegers/blade": "^1.4",
+        "thingengineer/mysqli-database-class": "^2.9",
+        "firebase/php-jwt": "^6.8"
+    }
+}

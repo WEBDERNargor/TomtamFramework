@@ -1,0 +1,22 @@
+<?php
+define("SSL","https://tomtamshop.com");
+define("WEB","Nargor");
+define("CON","ระบบพร้อมใช้งาน");
+define("SECRET","fdfdfdf");
+
+$config=[
+"web_secret"=>SECRET,
+"website"=>WEB,
+"base_url"=>SSL,
+"mysql"=>[
+    "host"=>"localhost",
+    "user"=>"root",
+    "pass"=>"",
+    "dbname"=>"portfolio",
+    "port"=>"3306",
+    "charset"=>"utf8"
+]
+];
+$config=(object)$config;
+$config->mysql=(object)$config->mysql;
+?>

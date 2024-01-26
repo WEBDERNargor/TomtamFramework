@@ -1,0 +1,74 @@
+
+
+:root {
+    --color-1: #EC7063;
+    --color-2: #504F4F;
+    --color-3:black;
+    --color-4:#B23900;
+    --color-5:#FF9E08;
+}
+
+.site-header {
+  box-shadow: 0 0 22px rgba(0,0,0,0.15);
+}
+
+a.mainlink:link {
+    text-decoration: none;
+    color:var(--color-1);
+  }
+
+a.mainlink:visited {
+text-decoration: none;
+color:var(--color-1);
+}
+
+a.mainlink:hover {
+    color:var(--color-2);
+}
+.mainimg{
+  width:100%;
+  height:150px;
+  background:var(--img);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+-webkit-transition: background-size 0.3s ease-in;
+transition: background-size 0.3s ease-in;
+}
+.mainimg:hover{
+  background-size:110%;
+}
+a.mainlink2:link {
+    text-decoration: none;
+   
+  }
+
+a.mainlink2:visited {
+text-decoration: none;
+
+}
+
+
+
+a.mainlink2:hover .mainimg {
+  background-size:110%;
+}
+.bbgs:hover{
+  background:var(--color-5) ;
+}
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+}
