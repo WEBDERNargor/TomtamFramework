@@ -2,15 +2,14 @@
 class db{
     public $conn;
  
-function __construct($host,$user,$pass,$dbname,$port,$charset){
-    try{
-    $this->conn=new PDO("mysql:".$host.":".$port."=;dbname=".$dbname.";charset=".$charset,$user,$pass);
-    $this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    }catch(PDOException $e){
-        echo "Connection failed : ".$e;
+    function __construct($host, $user, $pass, $dbname, $port, $charset) {
+        try {
+            $this->conn = new PDO("mysql:host=".$host.";port=".$port.";dbname=".$dbname.";charset=".$charset, $user, $pass);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
     }
-
-}
 
 function sql($sql,$data=[]){
     $res=$this->conn->prepare($sql);

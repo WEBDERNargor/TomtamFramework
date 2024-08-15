@@ -1,117 +1,71 @@
-<nav class="navbar navbar-expand-lg site-header sticky-top bg-dark navbar-dark" id="navbar">
-  <div class="container">
-    <a class="navbar-brand" href="{{SSL}}">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{SSL}}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            หมวดหมู่
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{SSL}}/type/none">ไม่จัดหมวดหมู่</a></li>
-            @foreach (get_type()['data'] as $key_type=>$row_type)
-            <li><a class="dropdown-item" href="{{SSL}}/type/{{$row_type['tp_id']}}">{{$row_type['tp_name']}}</a></li>
-           @endforeach
-           
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
+
+
+<nav x-data="{}" class="bg-[#7395AE] text-white sticky w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="{{SSL}}" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="{{images()}}/system/logo.png" class="h-8" alt="Flowbite Logo">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{WEB}}</span>
+    </a>
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+
       
+      @if(isset($_SESSION['user_data']))
+
+      <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span class="sr-only">Open user menu</span>
+        <img class="w-8 h-8 rounded-full" src="{{images()}}/system/profile.svg" alt="user photo">
+      </button>
+      <!-- Dropdown menu -->
+      <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+        <div class="px-4 py-3">
+          <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+          <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+          <li>
+            <a href="{{SSL}}/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">profile</a>
+          </li>
+          @if(isset($_SESSION['user_data']['m_auth']) && ($_SESSION['user_data']['m_auth']=='superadmin' || $_SESSION['user_data']['m_auth']=='admin'))
+          <li>
+            <a href="{{SSL}}/admin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Admin page</a>
+          </li>
+          @endif
+          <li>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+          </li>
+          <li>
+            <a href="#" @click.prevent="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+          </li>
+        </ul>
+      </div>
         
-         
-      
-      </ul>
-    
-      <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{{SSL}}/search"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</a>
-        </li>
-        @if ($user['status']=='success')
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{$user['data']['m_name']}}
-          </a>
-          <ul class="dropdown-menu">
-            @if($user['data']['m_auth']=='admin' or $user['data']['m_auth']=='employee')
-            <li><a class="dropdown-item" href="{{SSL}}/admin">admin zone</a></li>
-            @endif
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item logoutbtn" href="#">ออกจากระบบ</a></li>
-          </ul>
-        </li>
-@else
-<li class="nav-item">
-  <a class="nav-link" href="{{SSL}}/register">ลงทะเบียน</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="{{SSL}}/login">เข้าสู่ระบบ</a>
-</li>
-@endif
+        @else
        
-      </ul>
-     
+        <a href="{{SSL}}/login" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">เข้าสู่ระบบ</a>
+        @endif
+        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+      </button>
     </div>
-  </div>
-</nav>
-<script>
-
-
-$(document).ready(function(){
-  // const d = new Date();
-
-  // if(d.getHours()>=6 && d.getHours()<18){
-  //   $("#navbar").removeClass("navbar-dark").removeClass("bg-dark").addClass("bg-light");
-  //   $(".theme").addClass("bg-light").removeClass("bg-dark");
-  // }else{
-  //   $("#navbar").addClass("navbar-dark").addClass("bg-dark").removeClass("bg-light");
-  //   $(".theme").removeClass("bg-light").addClass("bg-dark").addClass("text-light");
-  //   $("body").css("background","var(--bs-gray-700)");
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+      <ul class="flex flex-col p-4  mt-4 font-medium rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0   ">
+        <li>
+          <a href="{{SSL}}" class="block py-2 px-3 text-white  rounded    " aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="{{SSL}}/store" class="block py-2 px-3  rounded ">Store</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-3  rounded r">Services</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-3  rounded ">Contact</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
   
-  //     $(".mainlink").css("color","#E2E1E1");
-
-
-  //   $(this).on('mouseenter','.mainlink',function(){
-  //           $(this).css("color","var(--bs-white)");
-  //          });
-
-  //          $(this).on('mouseleave','.mainlink',function(){
-  //           $(this).css("color","#E2E1E1");
-  //           });
-
-
-  // }
-      $(".logoutbtn").click(function(){
-
-
-
-Swal.fire({
-title: 'ต้องการออกจากระบบหรือม่',
-icon: 'warning',
-showCancelButton: true,
-confirmButtonColor: '#3085d6',
-cancelButtonColor: '#d33',
-confirmButtonText: 'ใช่',
-cancelButtonText: 'ไม่'
-}).then((result) => {
-if (result.isConfirmed) {
- window.location="{{SSL}}/logout";
-}
-})
-
-
-});
-});
-
-</script>

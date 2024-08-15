@@ -19,10 +19,53 @@ function getaud(){
      return $url;  
 }
 
+function get_IP_address()
+{
+    foreach (array('HTTP_CLIENT_IP',
+                   'HTTP_X_FORWARDED_FOR',
+                   'HTTP_X_FORWARDED',
+                   'HTTP_X_CLUSTER_CLIENT_IP',
+                   'HTTP_FORWARDED_FOR',
+                   'HTTP_FORWARDED',
+                   'REMOTE_ADDR') as $key){
+        if (array_key_exists($key, $_SERVER) === true){
+            foreach (explode(',', $_SERVER[$key]) as $IPaddress){
+                $IPaddress = trim($IPaddress); // Just to be safe
+
+                if (filter_var($IPaddress,
+                               FILTER_VALIDATE_IP,
+                               FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)
+                    !== false) {
+
+                    return $IPaddress;
+                }
+            }
+        }
+    }
+}
+
+
+function setSecureCookiePHP($name, $value, $days) {
+  $expire = time() + ($days * 24 * 60 * 60);
+  setcookie($name, $value, $expire, "/", "", true, true);
+}
+
+function getSecureCookiePHP($name) {
+  return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
+}
+
+
+function deleteSecureCookiePHP($name) {
+  setcookie($name, "", time() - 3600, "/", "", true, true);
+}
 
 
 function assets(){
   return SSL."/assets";
+}
+
+function images(){
+  return SSL."/images";
 }
 
 function dateformate($arr=['datetime'=>'','formate'=>'']){
@@ -40,25 +83,22 @@ function dateformate($arr=['datetime'=>'','formate'=>'']){
   return date($formate, strtotime($date));
 }
 
-function get_type(){
 
-$curl = curl_init();
 
-curl_setopt_array($curl, array(
-  CURLOPT_URL => SSL.'/api/type/all',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-));
 
-$response = curl_exec($curl);
-$data=json_decode($response,true);
-curl_close($curl);
-return $data;
+function config(){
+  return $GLOBALS['config'];
+}
+
+function VIEW($name,$var=[]){
+  echo $GLOBALS['view']->render($name, $var);
+}
+
+function mysql(){
+  return $GLOBALS['db'];
+}
+function router(){
+  return $GLOBALS['tom']->router;
 }
 
 ?>
