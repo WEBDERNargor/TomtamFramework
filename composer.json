@@ -4,5 +4,8 @@
         "jenssegers/blade": "^1.4",
         "thingengineer/mysqli-database-class": "^2.9",
         "firebase/php-jwt": "^6.8"
+    },
+    "scripts": {
+        "serve": "php serve.php"
     }
 }

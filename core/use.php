@@ -10,16 +10,26 @@ ob_start();
 use Jenssegers\Blade\Blade;
 date_default_timezone_set("Asia/Bangkok");
 $tom=new TOM();
-$view = new Blade('views', 'cache');
+$view = new Blade(__DIR__.'/../views', __DIR__.'/../cache');
 include(__DIR__."/function.php");
-$db = new db ($config->mysql->host,$config->mysql->user, $config->mysql->pass,$config->mysql->dbname,$config->mysql->port,$config->mysql->charset);
 
+$db = new db ($config->mysql->host,$config->mysql->user, $config->mysql->pass,$config->mysql->dbname,$config->mysql->port,$config->mysql->charset);
+require(__DIR__."/model.php");
+require(__DIR__."/controller.php");
 //include functions folder
 
 $folder_function=__DIR__."/../functions/";
 $files_function = glob($folder_function."*.php");
 foreach($files_function as $phpFilefunction){   
     require($phpFilefunction); 
+}
+
+
+//include controllers folder
+$folder_model=__DIR__."/../models/";
+$files_model = glob($folder_model."*.php");
+foreach($files_model as $phpFilemodel){   
+    require($phpFilemodel); 
 }
 //include controllers folder
 $folder_controller=__DIR__."/../controllers/";

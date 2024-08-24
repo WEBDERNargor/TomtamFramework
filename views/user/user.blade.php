@@ -4,11 +4,14 @@
 
 @section('php_code')
 
+<?php
+
+?>
 
 @endsection
 
 
-@section('title', WEB)
+@section('title', "55")
  
 @section('header')
 
@@ -16,16 +19,10 @@
 
  
 @section('content')
-<div class="container mx-auto">
-  
-  <textarea name="" id="detail" cols="30" rows="10"></textarea>
-</div>
+{{pre_r($fetch)}}
 @endsection
 
 @section('scripts')
-
 <script>
-CKEDITOR.replace('detail');
-    
 </script>
 @endsection

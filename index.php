@@ -1,5 +1,3 @@
-<?php
-
-require(__DIR__.'/core/use.php');
-
+<?php 
+require(__DIR__."/public/index.php")
 ?>
